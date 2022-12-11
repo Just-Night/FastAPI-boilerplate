@@ -1,0 +1,45 @@
+version: '3.7'
+
+services:
+  app:
+    restart: always
+    tty: true
+    build:
+      context: ./services/backend/
+    container_name: app
+    volumes:
+      - ./services/backend/service/api:/home/appuser/project/api/
+      - ./services/backend/service/apps:/home/appuser/project/apps/
+      - ./services/backend/service/settings:/home/appuser/project/settings/
+    env_file:
+      - ./services/backend/.env
+    command: ./services/backend/local.entrypoint.sh
+    ports:
+      - '8000:8000'
+    depends_on:
+      - pgdb
+
+  pgdb:
+    image: postgres:13.3-alpine
+    container_name: postgres
+    env_file:
+      - ./services/postgres/.env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # pgadmin:
+  #   container_name: pgadmin4_container
+  #   image: dpage/pgadmin4:5.5
+  #   restart: always
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: admin@admin.admin
+  #     PGADMIN_DEFAULT_PASSWORD: secret
+  #     PGADMIN_LISTEN_PORT: 80
+  #   ports:
+  #     - "8080:80"
+  #   volumes:
+  #     - pgadmin-data:/var/lib/pgadmin
+
+volumes:
+  postgres_data:
+  # pgadmin-data:

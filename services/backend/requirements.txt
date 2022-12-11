@@ -1,0 +1,13 @@
+# framework 
+fastapi==0.88.0
+uvicorn
+# database
+SQLAlchemy==1.4.45
+alembic
+aiosqlite==0.17.0
+psycopg2-binary
+pydantic
+pydantic[email]
+# 
+flake8
+flake8-bugbear
