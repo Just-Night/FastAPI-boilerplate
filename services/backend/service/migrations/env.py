@@ -3,7 +3,7 @@ import os
 from logging.config import fileConfig
 from sqlalchemy import create_engine
 from alembic import context
-from main import BASE
+from database import BASE
 
 # from sqlalchemy.ext.declarative import declarative_base
 # this is the Alembic Config object, which provides

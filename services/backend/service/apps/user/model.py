@@ -1,4 +1,4 @@
-from main import BASE
+from db import BASE
 from sqlalchemy import(  # noqa: disable=F401
     Table,
     Column,
