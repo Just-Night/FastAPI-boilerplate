@@ -1,11 +1,9 @@
-import sys
-from os.path import abspath, dirname
-sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
+import os
 
 from logging.config import fileConfig
 from sqlalchemy import create_engine
 from alembic import context
-from database.model import BASE
+from main import BASE
 
 # from sqlalchemy.ext.declarative import declarative_base
 # this is the Alembic Config object, which provides
@@ -30,14 +28,14 @@ target_metadata = BASE.metadata
 
 
 def get_url():
-        db_string = 'postgresql+psycopg2://{user}:{password}@{host}:{port}/{db_name}'.format(
-            user=os.environ.get('POSTGRES_USER'),
-            password=os.environ.get('POSTGRES_PASSWORD'),
-            host=os.environ.get('DB_HOST'),
-            port=os.environ.get('DB_PORT'),
-            db_name=os.environ.get('POSTGRES_DB')
-        )
-        return db_string
+    db_string = 'postgresql+psycopg2://{user}:{password}@{host}:{port}/{db_name}'.format(
+        user=os.environ.get('POSTGRES_USER'),
+        password=os.environ.get('POSTGRES_PASSWORD'),
+        host=os.environ.get('DB_HOST'),
+        port=os.environ.get('DB_PORT'),
+        db_name=os.environ.get('POSTGRES_DB')
+    )
+    return db_string
 
 
 def run_migrations_offline() -> None:
@@ -58,6 +56,7 @@ def run_migrations_offline() -> None:
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
+        include_schemas=True
     )
 
     with context.begin_transaction():

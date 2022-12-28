@@ -11,6 +11,7 @@ services:
       - ./services/backend/service/api:/home/appuser/project/api/
       - ./services/backend/service/apps:/home/appuser/project/apps/
       - ./services/backend/service/settings:/home/appuser/project/database/
+      - ./services/backend/service/settings:/home/appuser/project/database/versions
       - ./services/backend/service/settings:/home/appuser/project/settings/
     env_file:
       - ./services/backend/.env

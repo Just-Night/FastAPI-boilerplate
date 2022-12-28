@@ -1,6 +1,7 @@
 from fastapi import FastAPI, APIRouter, Request, Depends  # noqa
 from fastapi.middleware.cors import CORSMiddleware
 from api.urls import api_router
+from db.model import BASE  # noqa
 from settings import settings
 
 app = FastAPI(
