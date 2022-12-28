@@ -1,13 +1,13 @@
 # framework 
 fastapi==0.88.0
 uvicorn
+pydantic
+pydantic[email]
 # database
 SQLAlchemy==1.4.45
 alembic
 aiosqlite==0.17.0
 psycopg2-binary
-pydantic
-pydantic[email]
-# 
+# develop
 flake8
 flake8-bugbear

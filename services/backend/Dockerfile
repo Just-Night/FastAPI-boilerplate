@@ -26,8 +26,8 @@ RUN set -ex \
     pip install --upgrade pip && \
     pip install --no-cache-dir -r ${APP_DIR}requirements.txt
 
-
 COPY service ${APP_DIR}
+COPY ./alembic.ini ${APP_DIR}
 COPY ./local.entrypoint.sh ${APP_DIR}
 RUN chmod a+x ${APP_DIR}local.entrypoint.sh && \
     mkdir -p ${APP_DIR}backend-static && \

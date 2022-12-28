@@ -1,6 +1,6 @@
 from fastapi import FastAPI, APIRouter, Request, Depends  # noqa
 from fastapi.middleware.cors import CORSMiddleware
-from api.router import routers
+from api.urls import api_router
 from settings import settings
 
 app = FastAPI(
@@ -19,4 +19,4 @@ app.add_middleware(
     allow_credentials=True
 )
 # Router include
-app.include_router(routers)
+app.include_router(api_router)
