@@ -5,9 +5,9 @@ from sqlalchemy import(  # noqa: disable=F401
 )
 from sqlalchemy.dialects.postgresql import UUID  # noqa:disable=F401
 
-from sqlalchemy.ext.declarative import declarative_base, declared_attr, DeclarativeMeta
+from sqlalchemy.ext.declarative import declarative_base, declared_attr
 
-BASE: DeclarativeMeta = declarative_base()
+BASE = declarative_base()
 
 
 class BASE_MODEL(BASE):

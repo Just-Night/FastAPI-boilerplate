@@ -1,4 +1,4 @@
-from db import BASE
+from database import BASE_MODEL
 from sqlalchemy import(  # noqa: disable=F401
     Table,
     Column,
@@ -14,8 +14,7 @@ from sqlalchemy import(  # noqa: disable=F401
     )
 
 
-class User(BASE):
-    __tablename__ = "users"
+class User(BASE_MODEL):
 
     login = Column(String, unique=True)
     password = Column(String, nullable=True)

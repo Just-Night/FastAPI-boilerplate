@@ -3,7 +3,10 @@ import os
 from logging.config import fileConfig
 from sqlalchemy import create_engine
 from alembic import context
+
 from database import BASE
+from apps.models import *  # noqa disable=F401 | apps.models Used for find meta
+
 
 # from sqlalchemy.ext.declarative import declarative_base
 # this is the Alembic Config object, which provides
@@ -54,8 +57,6 @@ def run_migrations_offline() -> None:
     context.configure(
         url=url,
         target_metadata=target_metadata,
-        literal_binds=True,
-        dialect_opts={"paramstyle": "named"},
         include_schemas=True
     )
 
