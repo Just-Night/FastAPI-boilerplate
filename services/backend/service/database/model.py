@@ -1,11 +1,14 @@
 import uuid
-from sqlalchemy import(  # noqa: disable=F401
-    Table,
-    Column,
-)
 from sqlalchemy.dialects.postgresql import UUID  # noqa:disable=F401
 
+from sqlalchemy.sql import func
 from sqlalchemy.ext.declarative import declarative_base, declared_attr
+
+from sqlalchemy import(  # noqa: disable=F401
+    Column,
+    DateTime,
+)
+
 
 BASE = declarative_base()
 
@@ -23,3 +26,10 @@ class BASE_MODEL(BASE):
             unique=True,
             default=uuid.uuid4
         )
+
+
+class DEFAULT_TIME(object):
+    __abstract__ = True
+
+    created_at = Column(DateTime, nullable=False, server_default=func.now())
+    updated_at = Column(DateTime, nullable=False, server_default=func.now())
