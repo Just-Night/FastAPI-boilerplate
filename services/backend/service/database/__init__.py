@@ -1,1 +1,1 @@
-from .model import BASE, BASE_MODEL
+from .model import BASE, BASE_MODEL, DEFAULT_TIME

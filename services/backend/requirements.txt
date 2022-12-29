@@ -1,8 +1,9 @@
 # framework 
-fastapi==0.88.0
+fastapi[all]==0.88.0
 uvicorn
 pydantic
 pydantic[email]
+python-jose[cryptography]
 # database
 SQLAlchemy==1.4.45
 alembic
