@@ -9,5 +9,6 @@ alembic
 aiosqlite==0.17.0
 psycopg2-binary
 # develop
+typer[all]
 flake8
 flake8-bugbear

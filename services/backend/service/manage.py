@@ -1,21 +1,18 @@
-#!/usr/bin/env python
-import os
+import typer
 import subprocess
 
-
-def main():
-    """Run administrative tasks."""
-    print("select\n1 - create SuperUser\n2 - migrate\n0 - exit")
-    parametr = int(input())
-    if parametr == 1:
-        # login = str(input("login: "))
-        # password = str(input("password: "))
-        print("SuperUser create")
-    elif parametr == 2:
-        subprocess.Popen('alembic -c ./migrations/alembic.ini revision --autogenerate')
-    else:
-        print("exit")
+app = typer.Typer()
 
 
-if __name__ == '__main__':
-    main()
+@app.command()
+def migrate():
+    subprocess.run(['./scripts/migrate.sh'])
+
+
+@app.command()
+def run_server():
+    print("Not work")
+
+
+if __name__ == "__main__":
+    app()
