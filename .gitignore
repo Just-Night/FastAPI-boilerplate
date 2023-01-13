@@ -2,7 +2,7 @@
 *.env
 *env
 
-# django
+# FastAPI
 *.log
 *.pot
 *.pyc
@@ -10,6 +10,7 @@ __pycache__
 db.sqlite3
 *media
 *backend-static
+*services/backend/service/settings/versions
 
 # ide
 *.idea/

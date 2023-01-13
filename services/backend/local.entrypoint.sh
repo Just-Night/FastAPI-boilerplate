@@ -11,6 +11,6 @@ then
     echo "PostgreSQL started"
 fi
 
-# python manage.py migrate
+python manage.py check
 
 uvicorn main:app --host 0.0.0.0 --port 8000 --reload

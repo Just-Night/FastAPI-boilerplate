@@ -18,4 +18,3 @@ class User(BASE_MODEL):
 
     login = Column(String, unique=True)
     password = Column(String, nullable=True)
-    datas = Column(String)
