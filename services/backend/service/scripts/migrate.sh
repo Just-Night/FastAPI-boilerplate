@@ -1,4 +1,5 @@
 #!/bin/sh
+
 echo "Start migrate"
 
 # autogenerete migrate

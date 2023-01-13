@@ -6,7 +6,12 @@ app = typer.Typer()
 
 @app.command()
 def migrate():
-    subprocess.run(['./scripts/migrate.sh'])
+    subprocess.run(['bash', './scripts/migrate.sh'])
+
+
+@app.command()
+def check():
+    subprocess.run(['bash', './scripts/check.sh'])
 
 
 @app.command()
