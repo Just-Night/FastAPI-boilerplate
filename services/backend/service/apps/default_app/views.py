@@ -1,5 +1,11 @@
 from fastapi import APIRouter
 
+
 router = APIRouter(
-        prefix='',
+    prefix='',
 )
+
+
+@router.get("/defauls")
+def env():
+    return "default"

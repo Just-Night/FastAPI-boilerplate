@@ -6,3 +6,7 @@ api_router: APIRouter = APIRouter(
 )
 
 api_router.include_router(urls.router)
+
+from apps.default_app.views import router
+
+api_router.include_router(router)

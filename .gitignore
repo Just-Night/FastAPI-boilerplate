@@ -1,8 +1,9 @@
 # env
 *.env
 *env
+*vscode
 
-# django
+# FastAPI
 *.log
 *.pot
 *.pyc
@@ -11,6 +12,8 @@ db.sqlite3
 *media
 *backend-static
 
+#develop
+*migrations/versions
 # ide
 *.idea/
 

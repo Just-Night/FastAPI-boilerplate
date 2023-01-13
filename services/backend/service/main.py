@@ -3,13 +3,16 @@ from fastapi.middleware.cors import CORSMiddleware
 from api.urls import api_router
 from settings import settings
 
+print(settings.PROJECT_NAME)
+
 app = FastAPI(
-    title=settings.PROJECT_NAME,
+    title="settings.PROJECT_NAME",
     openapi_url="/openapi.json",
     debug=settings.DEBUG,
     docs_url=settings.DOCKS_URL,
     redoc_url=settings.REDOC_URL
 )
+
 # CORS settings
 app.add_middleware(
     CORSMiddleware,
