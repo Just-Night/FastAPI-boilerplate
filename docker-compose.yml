@@ -8,6 +8,7 @@ services:
       context: ./services/backend/
     container_name: app
     volumes:
+      # - ./services/backend/service/main.py:/home/appuser/project/main.py
       - ./services/backend/service/api:/home/appuser/project/api/
       - ./services/backend/service/apps:/home/appuser/project/apps/
       - ./services/backend/service/database:/home/appuser/project/database/
