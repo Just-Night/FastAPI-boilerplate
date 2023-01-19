@@ -17,8 +17,8 @@ from sqlalchemy import(  # noqa: disable=F401
 
 class User(BASE_MODEL, DEFAULT_TIME):
 
-    email = Column(String, unique=True)
-    password = Column(String, nullable=True)
+    login = Column(String, unique=True)
+    hashed_password = Column(String, nullable=False)
 
     is_staff = Column(Boolean, default=False)
     is_superuser = Column(Boolean, default=False)

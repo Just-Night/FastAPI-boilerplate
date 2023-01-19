@@ -13,7 +13,6 @@ db_string = 'postgresql+psycopg2://{user}:{password}@{host}:{port}/{db_name}'.fo
 )
 
 engine = create_engine(db_string, echo=False)
-
 if settings.ASYNC:
     async_session = sessionmaker(
         bind=engine,
