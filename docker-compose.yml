@@ -11,6 +11,7 @@ services:
       # - ./services/backend/service/main.py:/home/appuser/project/main.py
       - ./services/backend/service/api:/home/appuser/project/api/
       - ./services/backend/service/apps:/home/appuser/project/apps/
+      - ./services/backend/service/crud:/home/appuser/project/crud/
       - ./services/backend/service/database:/home/appuser/project/database/
       - ./services/backend/service/settings:/home/appuser/project/settings/
     env_file:

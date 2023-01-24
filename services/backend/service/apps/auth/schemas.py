@@ -1,6 +1,6 @@
-from typing import List, Optional  # noqa: disable=F401
+from typing import Union, List, Optional  # noqa
+from pydantic import BaseModel, SecretStr  # noqa
 from uuid import UUID
-from pydantic import BaseModel
 
 
 class Base(BaseModel):
@@ -8,3 +8,17 @@ class Base(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class OAuth2(BaseModel):
+    login: Optional[str] = None
+    password: Optional[str] = None
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    uuid: Optional[UUID] = None

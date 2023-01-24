@@ -27,6 +27,7 @@ RUN set -ex \
     pip install --no-cache-dir -r ${APP_DIR}requirements.txt
 
 COPY service ${APP_DIR}
+copy ./scripts ${APP_DIR}/scripts
 COPY ./alembic.ini ${APP_DIR}
 COPY ./local.entrypoint.sh ${APP_DIR}
 RUN chmod a+x ${APP_DIR}local.entrypoint.sh && \

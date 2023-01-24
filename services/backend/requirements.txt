@@ -3,6 +3,10 @@ fastapi==0.88.0
 uvicorn
 pydantic
 pydantic[email]
+python-multipart
+# jwt
+python-jose[cryptography]
+passlib[bcrypt]
 # database
 SQLAlchemy==1.4.45
 alembic
