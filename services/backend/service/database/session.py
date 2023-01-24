@@ -1,19 +1,19 @@
-from settings import settings
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.asyncio import AsyncSession
+from settings import config
 
 
 db_string = 'postgresql+psycopg2://{user}:{password}@{host}:{port}/{db_name}'.format(  # noqa
-    user=settings.DB_USER,
-    password=settings.DB_PASSWORD,
-    host=settings.DB_HOST,
-    port=settings.DB_PORT,
-    db_name=settings.DB_NAME
+    user=config.DB_USER,
+    password=config.DB_PASSWORD,
+    host=config.DB_HOST,
+    port=config.DB_PORT,
+    db_name=config.DB_NAME
 )
 
 engine = create_engine(db_string, echo=False)
-if settings.ASYNC:
+if config.ASYNC:
     async_session = sessionmaker(
         bind=engine,
         class_=AsyncSession,

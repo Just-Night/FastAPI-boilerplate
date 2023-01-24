@@ -1,6 +1,6 @@
 from datetime import datetime
 from fastapi import APIRouter
-from settings import settings
+from settings import config
 
 router = APIRouter(
     prefix='/default_app',
@@ -10,4 +10,4 @@ router = APIRouter(
 
 @router.get("/test")
 def get():
-    return datetime.utcnow() + settings.REFRESH_TOKEN_EXPIRE
+    return datetime.utcnow() + config.REFRESH_TOKEN_EXPIRE

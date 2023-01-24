@@ -7,7 +7,7 @@ from passlib.context import CryptContext
 
 from datetime import datetime
 
-from settings import settings
+from settings import config
 from apps import models
 
 
@@ -42,10 +42,10 @@ def create_access_token(subject: Union[str, Any], expires_delta: int = None) -> 
     if expires_delta is not None:
         expires_delta = datetime.utcnow() + expires_delta
     else:
-        expires_delta = datetime.utcnow() + settings.ACCESS_TOKEN_EXPIRE
+        expires_delta = datetime.utcnow() + config.ACCESS_TOKEN_EXPIRE
 
     to_encode = {"exp": expires_delta, "sub": str(subject)}
-    encoded_jwt = jwt.encode(to_encode, settings.JWT_SECRET_KEY, settings.ALGORITHM)
+    encoded_jwt = jwt.encode(to_encode, config.JWT_SECRET_KEY, config.ALGORITHM)
     return encoded_jwt
 
 
@@ -53,10 +53,10 @@ def create_refresh_token(subject: Union[str, Any], expires_delta: int = None) ->
     if expires_delta is not None:
         expires_delta = datetime.utcnow() + expires_delta
     else:
-        expires_delta = datetime.utcnow() + settings.REFRESH_TOKEN_EXPIRE
+        expires_delta = datetime.utcnow() + config.REFRESH_TOKEN_EXPIRE
 
     to_encode = {"exp": expires_delta, "sub": str(subject)}
-    encoded_jwt = jwt.encode(to_encode, settings.JWT_SECRET_KEY, settings.ALGORITHM)
+    encoded_jwt = jwt.encode(to_encode, config.JWT_SECRET_KEY, config.ALGORITHM)
     return encoded_jwt
 
 

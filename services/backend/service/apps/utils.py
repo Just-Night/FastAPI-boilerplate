@@ -6,7 +6,7 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 
 
-from settings import settings
+from settings import config
 from apps import models
 from .auth import schemas
 from database import db_session
@@ -33,8 +33,8 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     try:
         payload = jwt.decode(
             token,
-            settings.JWT_SECRET_KEY,
-            algorithms=[settings.ALGORITHM],
+            config.JWT_SECRET_KEY,
+            algorithms=[config.ALGORITHM],
             options={"verify_aud": False},
         )
         uuid: str = payload.get("sub")
