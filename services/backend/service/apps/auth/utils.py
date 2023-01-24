@@ -1,6 +1,5 @@
-from fastapi import HTTPException, status
-from typing import Optional, Union, Any
 from sqlalchemy.orm.session import Session
+from typing import Optional, Union, Any
 
 from jose import jwt
 from passlib.context import CryptContext
@@ -12,20 +11,6 @@ from apps import models
 
 
 PWD_CONTEXT = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-
-# error
-credentials_exception_UNAUTHORIZED = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"}
-)
-
-credentials_exception_404_NOT_FOUND = HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND,
-        detail="Not found user",
-        headers={"WWW-Authenticate": "Bearer"}
-)
 
 
 # security
