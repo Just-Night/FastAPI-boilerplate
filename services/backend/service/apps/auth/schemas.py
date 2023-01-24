@@ -1,5 +1,18 @@
 from typing import Union, List, Optional  # noqa
-from pydantic import BaseModel, Field  # noqa
+from pydantic import BaseModel, SecretStr  # noqa
+from uuid import UUID
+
+
+class Base(BaseModel):
+    id: Optional[UUID]
+
+    class Config:
+        orm_mode = True
+
+
+class OAuth2(BaseModel):
+    login: Optional[str] = None
+    password: Optional[str] = None
 
 
 class Token(BaseModel):
@@ -8,19 +21,4 @@ class Token(BaseModel):
 
 
 class TokenData(BaseModel):
-    username: Union[str, None] = None
-
-
-class User(BaseModel):
-    login: Union[str, None] = None
-    full_name: Union[str, None] = None
-    disabled: Union[bool, None] = None
-
-
-class OAuth2Password(BaseModel):
-    login: Optional[str]
-    password: Optional[str]
-
-
-class UserInDB(User):
-    hashed_password: str
+    uuid: Optional[UUID] = None

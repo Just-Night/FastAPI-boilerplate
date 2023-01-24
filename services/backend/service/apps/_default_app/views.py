@@ -3,7 +3,8 @@ from fastapi import APIRouter
 from settings import settings
 
 router = APIRouter(
-    prefix='',
+    prefix='/default_app',
+    tags=["default app"]
 )
 
 

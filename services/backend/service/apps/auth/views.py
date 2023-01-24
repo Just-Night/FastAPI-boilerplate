@@ -5,15 +5,18 @@ from fastapi import (  # noqa
     HTTPException,
     status
     )
-# from fastapi.security import OAuth2PasswordRequestForm
-from typing import Any
 
-from .schemas import (
-    User,
-    OAuth2Password
-)
-from .utils import authenticate, create_access_token
+from typing import Any
 from database import Session
+
+from . import schemas
+from .utils import (
+    authenticate,
+    create_access_token,
+    create_refresh_token
+    )
+
+from crud import UserCrud
 
 router = APIRouter(
     prefix='/auth',
@@ -21,41 +24,29 @@ router = APIRouter(
 )
 
 
-@router.post("/signin")
-async def login(auth: OAuth2Password) -> Any:
+@router.post("/signin", status_code=status.HTTP_202_ACCEPTED)
+async def user_signin(auth: schemas.OAuth2) -> Any:
     """
     Get the JWT for a user with data from OAuth2 request form body.
     """
-    user = await authenticate(login=auth.login, password=auth.password, db=Session)
+
+    user = authenticate(login=auth.login, password=auth.password, db=Session)
     if not user:
         raise HTTPException(status_code=400, detail="Incorrect username or password")
 
     return {
-        "access_token": create_access_token(sub=user.id),
-        "token_type": "bearer",
+        "access_token": create_access_token(user.id),
+        "refresh_token": create_refresh_token(user.id),
     }
 
 
-# @router.post("/signup", response_model=User, status_code=201)  # 1
-# def create_user_signup(
-#     user_in: user.UserCreate  # 3
-# ) -> Any:
-#     """
-#     Create new user without the need to be logged in.
-#     """
+@router.post("/signup", status_code=status.HTTP_201_CREATED)
+def create_user_signup(user_in: schemas.OAuth2) -> Any:
+    """
+    Create new user without the need to be logged in.
+    """
 
-#     user_query: User = db.query(User).filter(User.email == user_in.email or User.nickname == user_in.nickname).first()
-#     if user_query.email == user_in.email:
-#         raise HTTPException(  # 5
-#             status_code=400,
-#             detail="The email already exists!",
-#         )
-#     if user_query.nickname == user_in.nickname:
-#         raise HTTPException(
-#             status_code=400,
-#             detail="This nickname already exists!"
-#         )
+    UserCrud.check_user_create(db=Session, user_in=user_in)
+    UserCrud._create_user(db=Session, obj_in=user_in)
 
-#     user = crud.user.create(db=db, obj_in=user_in)  # 6
-
-#     return user
+    return {"message": "Successful create!"}

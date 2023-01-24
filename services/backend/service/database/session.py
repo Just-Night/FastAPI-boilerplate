@@ -22,7 +22,16 @@ if settings.ASYNC:
         autoflush=False)
 
     Session: AsyncSession = async_session()
+
 else:
     session = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 
     Session: sessionmaker = session()
+
+
+def db_session() -> sessionmaker:
+    yield Session
+
+
+async def db_session_sync() -> sessionmaker:
+    yield Session

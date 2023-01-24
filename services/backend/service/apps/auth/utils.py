@@ -1,4 +1,3 @@
-from fastapi.security import OAuth2PasswordBearer  # , OAuth2PasswordRequestForm
 from fastapi import HTTPException, status
 from typing import Optional, Union, Any
 from sqlalchemy.orm.session import Session
@@ -9,14 +8,13 @@ from passlib.context import CryptContext
 from datetime import datetime
 
 from settings import settings
-from apps.models import User
-# from .schemas import User as User_
+from apps import models
 
 
 PWD_CONTEXT = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
+# error
 credentials_exception_UNAUTHORIZED = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -31,16 +29,16 @@ credentials_exception_404_NOT_FOUND = HTTPException(
 
 
 # security
-async def get_hashed_password(password: str) -> str:
+def get_hashed_password(password: str) -> str:
     return PWD_CONTEXT.hash(password)
 
 
-async def verify_password(password: str, hashed_pass: str) -> bool:
+def verify_password(password: str, hashed_pass: str) -> bool:
     return PWD_CONTEXT.verify(password, hashed_pass)
 
 
 # auth
-async def create_access_token(subject: Union[str, Any], expires_delta: int = None) -> str:
+def create_access_token(subject: Union[str, Any], expires_delta: int = None) -> str:
     if expires_delta is not None:
         expires_delta = datetime.utcnow() + expires_delta
     else:
@@ -51,7 +49,7 @@ async def create_access_token(subject: Union[str, Any], expires_delta: int = Non
     return encoded_jwt
 
 
-async def create_refresh_token(subject: Union[str, Any], expires_delta: int = None) -> str:
+def create_refresh_token(subject: Union[str, Any], expires_delta: int = None) -> str:
     if expires_delta is not None:
         expires_delta = datetime.utcnow() + expires_delta
     else:
@@ -62,10 +60,10 @@ async def create_refresh_token(subject: Union[str, Any], expires_delta: int = No
     return encoded_jwt
 
 
-async def authenticate(login: str, password: str, db: Session) -> Optional[User]:
-    user: User = db.query(User).filter(User.login == login).first()
+def authenticate(login: str, password: str, db: Session) -> Optional[models.User]:
+    user: models.User = db.query(models.User).filter(models.User.login == login).first()
     if not user:
         return None
-    if not await verify_password(password, user.hashed_password):
+    if not verify_password(password, user.hashed_password):
         return None
     return user
