@@ -23,15 +23,14 @@ if config.ASYNC:
 
     Session: AsyncSession = async_session()
 
+    async def db_session() -> sessionmaker:
+        yield Session
+
+
 else:
     session = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 
     Session: sessionmaker = session()
 
-
-def db_session() -> sessionmaker:
-    yield Session
-
-
-async def db_session_sync() -> sessionmaker:
-    yield Session
+    def db_session() -> sessionmaker:
+        yield Session
