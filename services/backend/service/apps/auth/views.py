@@ -1,13 +1,11 @@
 from fastapi import (  # noqa
     APIRouter,
     Depends,
-    Form,
     HTTPException,
     status
     )
 
-from typing import Any
-from database import Session
+from database import get_db
 
 from . import schemas
 from .utils import (
@@ -25,12 +23,12 @@ router = APIRouter(
 
 
 @router.post("/signin", status_code=status.HTTP_202_ACCEPTED)
-async def user_signin(auth: schemas.OAuth2) -> Any:
+async def user_signin(auth: schemas.OAuth2, db=Depends(get_db)):
     """
     Get the JWT for a user with data from OAuth2 request form body.
     """
 
-    user = authenticate(login=auth.login, password=auth.password, db=Session)
+    user = authenticate(login=auth.login, password=auth.password, db=db)
     if not user:
         raise HTTPException(status_code=400, detail="Incorrect username or password")
 
@@ -41,12 +39,12 @@ async def user_signin(auth: schemas.OAuth2) -> Any:
 
 
 @router.post("/signup", status_code=status.HTTP_201_CREATED)
-def create_user_signup(user_in: schemas.OAuth2) -> Any:
+def create_user_signup(user_in: schemas.OAuth2, db=Depends(get_db)):
     """
     Create new user without the need to be logged in.
     """
 
-    UserCrud.check_user_create(db=Session, user_in=user_in)
-    UserCrud._create_user(db=Session, obj_in=user_in)
+    UserCrud.check_user_create(db=db, user_in=user_in)
+    UserCrud._create_user(db=db, obj_in=user_in)
 
     return {"message": "Successful create!"}

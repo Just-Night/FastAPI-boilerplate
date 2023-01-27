@@ -9,7 +9,7 @@ from passlib.context import CryptContext
 from settings import config
 from apps import models
 from .auth import schemas
-from database import db_session
+from database import get_db
 
 
 PWD_CONTEXT = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -29,7 +29,7 @@ credentials_exception_404_NOT_FOUND = HTTPException(
 )
 
 
-def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(db_session)):  # noqa
+def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):  # noqa
     try:
         payload = jwt.decode(
             token,
