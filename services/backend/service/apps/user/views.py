@@ -1,8 +1,6 @@
 from fastapi import (  # noqa
     APIRouter,
     Depends,
-    Form,
-    HTTPException,
     status
     )
 
@@ -15,11 +13,10 @@ router = APIRouter(
 )
 
 
-@router.get("/me", response_model=schemas.User)
+@router.get("/me", response_model=schemas.User, status_code=status.HTTP_200_OK)
 def read_users_me(current_user=Depends(get_current_user)):
     """
     Fetch the current logged in user.
     """
 
-    user = current_user
-    return user
+    return current_user
