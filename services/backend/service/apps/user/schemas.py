@@ -12,6 +12,6 @@ class Base(BaseModel):
 
 
 class User(Base):
-    login: str
-    is_staff: bool
-    is_superuser: bool
+    login: Optional[str]
+    is_staff: Optional[bool]
+    is_superuser: Optional[bool]

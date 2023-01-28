@@ -1,1 +1,1 @@
-from .user_crud import UserCrud
+from .user_crud import UserCRUD
