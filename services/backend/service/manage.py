@@ -2,9 +2,7 @@ import typer
 import subprocess
 import os
 import getpass
-from database import db_session
 from apps.auth.schemas import OAuth2
-from crud import UserCRUD
 
 
 app = typer.Typer()
@@ -47,16 +45,16 @@ router = APIRouter(
 
 
 def folder_create(path):
-    os.mkdir(f'./apps/{path}')
+    os.mkdir(path)
 
 
-def folder_check(path):
-    if os.path.exists(f"./apps/{path}"):
-        raise print("Folder exists")
+def folder_check(path: str):
+    if os.path.exists(path):
+        return True
 
 
 def file_create(path: str, file_name: str):
-    return open(os.path.join(f'./apps/{path}', file_name), 'w')
+    return open(os.path.join(path, file_name), 'w')
 
 
 def file_write(file, text: str):
@@ -92,14 +90,19 @@ def generate_key(number: str = 32):
 
 
 @app.command()
-def create_app(path: str):
-    folder_check(path)
-    folder_create(path)
-    create_default_app(path)
+def create_app(name: str, path: str = './apps/'):
+    if folder_check(path+name):
+        return print("Folder exists")
+    folder_create(path+name)
+    create_default_app(path+name)
+    print('app creat in path '+path+name)
 
 
 @app.command()
 def create_syperuser(login=None, password=None, pass_again=None):
+    from database import db_session
+    from crud import UserCRUD
+
     if login or password or pass_again is None:
         login = input('Input login: ')
         password = getpass.getpass('Input password: ')
