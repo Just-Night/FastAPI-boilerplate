@@ -22,7 +22,7 @@ router = APIRouter(
 )
 
 
-@router.post("/signin", status_code=status.HTTP_202_ACCEPTED)
+@router.post('/signin', status_code=status.HTTP_202_ACCEPTED)
 async def user_signin(auth: schemas.OAuth2, db=Depends(get_db)):
     """
     Get the JWT for a user with data from OAuth2 request form body.
@@ -38,7 +38,7 @@ async def user_signin(auth: schemas.OAuth2, db=Depends(get_db)):
     }
 
 
-@router.post("/signup", status_code=status.HTTP_201_CREATED)
+@router.post('/signup', status_code=status.HTTP_201_CREATED)
 def create_user_signup(user_in: schemas.OAuth2, db=Depends(get_db)):
     """
     Create new user without the need to be logged in.
