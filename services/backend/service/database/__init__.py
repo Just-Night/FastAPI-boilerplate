@@ -1,2 +1,2 @@
 from .model import BASE, BASE_MODEL, DEFAULT_TIME
-from .session import get_db
+from .session import db_session, get_db
