@@ -90,7 +90,7 @@ def generate_key(number: str = 32):
 
 
 @app.command()
-def create_app(name: str, path: str = './services/backend/service'):
+def create_app(name: str, path: str = './services/backend/service/apps/'):
     if folder_check(path+name):
         return print("Folder exists")
     folder_create(path+name)
