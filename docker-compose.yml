@@ -5,44 +5,48 @@ services:
     restart: always
     tty: true
     build:
-      context: ./services/backend/
+      context: ./services/auth-services/
     container_name: app
     volumes:
-      # - ./services/backend/service/main.py:/home/appuser/project/main.py
-      - ./services/backend/service/api:/home/appuser/project/api/
-      - ./services/backend/service/apps:/home/appuser/project/apps/
-      - ./services/backend/service/crud:/home/appuser/project/crud/
-      - ./services/backend/service/database:/home/appuser/project/database/
-      - ./services/backend/service/settings:/home/appuser/project/settings/
+      - ./services/auth-services/service/_main_.py:/home/appuser/project/_main_.py
+      - ./services/auth-services/service/api:/home/appuser/project/api/
+      - ./services/auth-services/service/apps:/home/appuser/project/apps/
+      - ./services/auth-services/service/core:/home/appuser/project/core/
+      - ./services/auth-services/alembic:/home/appuser/project/alembic/
+      - ./services/auth-services/service/testsuite:/home/appuser/project/testsuite/
+      - ./services/auth-services/service/locales:/home/appuser/project/locales/
     env_file:
-      - ./services/backend/.env
-    command: ./services/backend/local.entrypoint.sh
+      - ./services/auth-services/.env
+    command: ['sh', '/home/appuser/project/local.entrypoint.sh']
     ports:
       - '8000:8000'
     depends_on:
       - pgdb
+      - redis
 
   pgdb:
     image: postgres:13.3-alpine
     container_name: postgres
-    env_file:
-      - ./services/postgres/.env
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      DB_HOST: pgdb
+      DB_PORT: 5432
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  pgadmin:
-    container_name: pgadmin4_container
-    image: dpage/pgadmin4:5.5
+  redis:
+    image: redis:alpine
     restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.admin
-      PGADMIN_DEFAULT_PASSWORD: secret
-      PGADMIN_LISTEN_PORT: 80
+    container_name: redis
     ports:
-      - "8080:80"
+      - "6379:6379"
     volumes:
-      - pgadmin-data:/var/lib/pgadmin
+    - redis_data:/data
+    command: redis-server --save 300 1
+
 
 volumes:
   postgres_data:
-  pgadmin-data:
+  redis_data:
