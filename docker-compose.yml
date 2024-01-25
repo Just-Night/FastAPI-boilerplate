@@ -5,18 +5,18 @@ services:
     restart: always
     tty: true
     build:
-      context: ./services/auth-services/
+      context: ./services/
     container_name: app
     volumes:
-      - ./services/auth-services/service/_main_.py:/home/appuser/project/_main_.py
-      - ./services/auth-services/service/api:/home/appuser/project/api/
-      - ./services/auth-services/service/apps:/home/appuser/project/apps/
-      - ./services/auth-services/service/core:/home/appuser/project/core/
-      - ./services/auth-services/alembic:/home/appuser/project/alembic/
-      - ./services/auth-services/service/testsuite:/home/appuser/project/testsuite/
-      - ./services/auth-services/service/locales:/home/appuser/project/locales/
+      - ./services/service/_main_.py:/home/appuser/project/_main_.py
+      - ./services/service/api:/home/appuser/project/api/
+      - ./services/service/apps:/home/appuser/project/apps/
+      - ./services/service/core:/home/appuser/project/core/
+      - ./services/alembic:/home/appuser/project/alembic/
+      - ./services/service/testsuite:/home/appuser/project/testsuite/
+      - ./services/service/locales:/home/appuser/project/locales/
     env_file:
-      - ./services/auth-services/.env
+      - ./services/.env
     command: ['sh', '/home/appuser/project/local.entrypoint.sh']
     ports:
       - '8000:8000'
