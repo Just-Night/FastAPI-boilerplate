@@ -1,0 +1,52 @@
+version: '3.7'
+
+services:
+  app:
+    restart: always
+    tty: true
+    build:
+      context: ./services/
+    container_name: app
+    volumes:
+      - ./services/service/_main_.py:/home/appuser/project/_main_.py
+      - ./services/service/api:/home/appuser/project/api/
+      - ./services/service/apps:/home/appuser/project/apps/
+      - ./services/service/core:/home/appuser/project/core/
+      - ./services/alembic:/home/appuser/project/alembic/
+      - ./services/service/testsuite:/home/appuser/project/testsuite/
+      - ./services/service/locales:/home/appuser/project/locales/
+    env_file:
+      - ./services/.env
+    command: ['sh', '/home/appuser/project/local.entrypoint.sh']
+    ports:
+      - '8000:8000'
+    depends_on:
+      - pgdb
+      - redis
+
+  pgdb:
+    image: postgres:13.3-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      DB_HOST: pgdb
+      DB_PORT: 5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:alpine
+    restart: always
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+    - redis_data:/data
+    command: redis-server --save 300 1
+
+
+volumes:
+  postgres_data:
+  redis_data:

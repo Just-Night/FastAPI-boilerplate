@@ -1,0 +1,23 @@
+# env
+*.env
+*env
+
+# django
+*.log
+*.pot
+*.pyc
+__pycache__
+db.sqlite3
+*media
+*backend-static
+
+# ide
+*.idea/
+.vscode
+
+# mac os
+*.DS_Store
+
+# another
+test
+test.c
