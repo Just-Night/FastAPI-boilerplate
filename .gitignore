@@ -1,9 +1,8 @@
 # env
 *.env
 *env
-*.vscode
 
-# FastAPI
+# django
 *.log
 *.pot
 *.pyc
@@ -11,10 +10,14 @@ __pycache__
 db.sqlite3
 *media
 *backend-static
-*services/backend/service/settings/versions
 
 # ide
 *.idea/
+.vscode
 
 # mac os
 *.DS_Store
+
+# another
+test
+test.c
